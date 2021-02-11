@@ -15,17 +15,30 @@ namespace DataformXamarin
         {
             dataForm = bindable;
             dataForm.DataObject = new DynamicDataModel().ExpandoObject;
-            dataForm.AutoGeneratingDataFormItem += DataForm_AutoGeneratingDataFormItem;
             base.OnAttachedTo(bindable);
+            this.WireEvents();
         }
-
+        private void WireEvents()
+        {
+            this.dataForm.AutoGeneratingDataFormItem += DataForm_AutoGeneratingDataFormItem;
+        }
         private void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)
         {
             if (e.DataFormItem != null && e.DataFormItem.Name == "DateOfBirth")
                 e.DataFormItem.Editor = "Date";
         }
+        protected override void OnDetachingFrom(SfDataForm bindable)
+        {
+            base.OnDetachingFrom(bindable);
+            this.UnWireEvents();
+        }
+        private void UnWireEvents()
+        {
+            this.dataForm.AutoGeneratingDataFormItem -= DataForm_AutoGeneratingDataFormItem;
+        }
     }
 }
+
 
 
     
