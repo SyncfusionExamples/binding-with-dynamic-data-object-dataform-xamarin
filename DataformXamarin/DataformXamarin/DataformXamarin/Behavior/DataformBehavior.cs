@@ -38,13 +38,3 @@ namespace DataformXamarin
         }
     }
 }
-
-
-
-    
-
-
-
-
-
-
